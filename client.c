@@ -6,51 +6,45 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/01 15:59:09 by spenning      ########   odam.nl         */
+/*   Updated: 2024/02/01 18:25:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include "./libft/libft.h"
 
-int 	binaryToDecimal(char * binary)
+void sendBytesEnd(int pid)
 {
 	int index;
-	int base;
-	int dec_val;
 
-	index = 7;
-	base = 1;
-	dec_val = 0;
-
-	while (index >= 0)
+	index = 0;
+	while (index <= 7)
 	{
-		if (binary[index] == '1')
-			dec_val += base;
-		base = base * 2;
-		index--;
+		kill(pid, SIGUSR2);
+		index++;
+		ft_printf("sigusr2: 1\n");
 	}
-	return(dec_val);
 }
 
-
-void printBits(unsigned char byte)
+void sendBits(unsigned char byte, int pid)
 {
 	int		index;
-	int 	bit;
 	
-	bit = 0;
 	index = 7;
 	while (index >= 0)
 	{
 		if(byte & (1 << index))
-			bit = 1;
+		{
+			kill(pid, SIGUSR2);
+			ft_printf("sigusr2: 1\n");
+		}
 		else 
-			bit = 0;
-		printf("%d", bit);
+		{
+			kill(pid, SIGUSR1);
+			ft_printf("sigusr1: 0\n");
+		}
 		index--;
 	}
-	printf("\n%c", binaryToDecimal("01100011"));
 }
 
 
@@ -72,8 +66,9 @@ int main (int argc, char **argv)
 	while(argv[2][index] != '\0')
 	{
 		printf("\n%c\n", argv[2][index]);
-		printBits(argv[2][index]);
+		sendBits(argv[2][index], pid);
 		index++;
 	}
+	sendBytesEnd(pid);
 	return(0);
 }
