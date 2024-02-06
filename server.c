@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/01 18:59:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/02/06 15:14:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,36 @@ int 	binaryToDecimal(char * binary)
 void handle_sigusr(int sig)
 {
 	int bit;
-	static char binary[8];
+	static char binary[9];
 	
 	bit = 0;
-	if(binaryindex == 7)
-	{
-		binary[7] = '\0';
-		write(STDOUT_FILENO, binary, 8);
-		binaryindex = 0;
-	}
 	if(sig == SIGUSR1)
 	{
 		bit = 0;
-		binary[binaryindex] = bit;
+		binary[binaryindex] = bit + 48;
+		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
+		// write(STDOUT_FILENO, "\n", 1);
+		// write(1, "sigusr1: 0\n", 11);
 		binaryindex++;
-		write(STDOUT_FILENO, "This is SIGUSR1\n", 16);
 	}
 	if(sig == SIGUSR2)
 	{
 		bit = 1;
-		binary[binaryindex] = bit;
+		binary[binaryindex] = bit + 48;
+		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
+		// write(STDOUT_FILENO, "\n", 1);
+		// write(1, "sigusr2: 1\n", 11);
 		binaryindex++;
-		write(STDOUT_FILENO, "This is SIGUSR2\n", 16);
 	}
-	write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
+	if(binaryindex == 8)
+	{
+		binary[8] = '\0';
+		// write(STDOUT_FILENO, &binary, 8);
+		// write(STDOUT_FILENO, "\n", 1);
+		ft_putchar_fd(binaryToDecimal(binary), STDOUT_FILENO);
+		// write(STDOUT_FILENO, "\n", 1);
+		binaryindex = 0;
+	}
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/01 18:25:49 by spenning      ########   odam.nl         */
+/*   Updated: 2024/02/06 12:20:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void sendBits(unsigned char byte, int pid)
 		if(byte & (1 << index))
 		{
 			kill(pid, SIGUSR2);
-			ft_printf("sigusr2: 1\n");
+			write(1, "sigusr2: 1\n", 11);
+			usleep(500);
 		}
 		else 
 		{
 			kill(pid, SIGUSR1);
-			ft_printf("sigusr1: 0\n");
+			write(1, "sigusr1: 0\n", 11);
+			usleep(500);
 		}
 		index--;
 	}
@@ -69,6 +71,6 @@ int main (int argc, char **argv)
 		sendBits(argv[2][index], pid);
 		index++;
 	}
-	sendBytesEnd(pid);
+	// sendBytesEnd(pid);
 	return(0);
 }
