@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:35:13 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 14:39:25 by mynodeus         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:32:55 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,46 @@
 
 struct c_msg_t msg;
 
-void sendBytesEnd(int pid)
-{
-	int index;
-
-	index = 0;
-	while (index <= 7)
-	{
-		kill(pid, SIGUSR2);
-		index++;
-		ft_printf("sigusr2: 1\n");
-	}
-}
-
 void sendBits(unsigned char byte, int pid)
 {
 	int		index;
 	index = 7;
-
 	while (index >= 0)
 	{
-		if(byte & (1 << index))
+		msg.sending = 1;
+		msg.received = 0;
+		ft_putstr_fd("sending", STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		while (msg.sending == 1 && msg.received == 0)
 		{
-			kill(pid, SIGUSR2);
-			msg.sending = 1;
-			write(1, "sigusr2: 1\n", 11);
+			if(byte & (1 << index))
+			{
+				kill(pid, SIGUSR2);
+				write(1, "sigusr2: 1\n", 11);
+			}
+			else 
+			{
+				kill(pid, SIGUSR1);
+				write(1, "sigusr1: 0\n", 11);
+			}
 			usleep(500);
+			index--;
 		}
-		else 
-		{
-			kill(pid, SIGUSR1);
-			msg.sending = 1;
-			write(1, "sigusr1: 0\n", 11);
-			usleep(500);
-		}
-		index--;
 	}
+}
+
+void sendBytesEnd(int pid)
+{
+	// int index;
+
+	// index = 0;
+	sendBits('\0', pid);
+	// while (index <= 7)
+	// {
+	// 	kill(pid, SIGUSR2);
+	// 	index++;
+	// 	ft_printf("sigusr2: 1\n");
+	// }
 }
 
 void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
@@ -60,12 +64,14 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		if (sig == SIGUSR1)
 		{
 			msg.received = 1;
+			msg.sending = 0;
 			ft_putstr_fd("received pid: ", STDOUT_FILENO);
 			ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 			ft_putchar_fd('\n', STDOUT_FILENO);
 		}
 		if (sig == SIGUSR2)
 		{
+			msg.sending = 0;
 			msg.received = 1;
 		}
 	}
@@ -96,6 +102,7 @@ int main (int argc, char **argv)
 	ft_printf("%d\n", getpid());
 	pid = ft_atoi(argv[1]);
 	msg.pid = pid;
+	msg.received = 1;
 	index = 0;
 	if (argc != 3)
 	{
@@ -108,13 +115,12 @@ int main (int argc, char **argv)
 		sendBits(argv[2][index], pid);
 		index++;
 	}
+	sendBytesEnd(pid);
 	while (1)
 	{
 		sleep(1);
 		if(msg.received == 0)
 			ft_printf("ISNULL\n");
 	}
-	
-	// sendBytesEnd(pid);
 	return(0);
 }

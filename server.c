@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:55:22 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 14:41:12 by mynodeus         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:32:20 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,40 @@ int 	binaryToDecimal(char * binary)
 
 void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 {
-	int bit;
 	static char binary[9];
   	ucontext_t *context = (ucontext_t*)ucontext;
   	unsigned long pc = context->uc_stack.ss_flags;
-	ft_putnbr_fd(pc, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
-	bit = 0;
+	pc = pc -1;
 	if(sig == SIGUSR1)
 	{
-		kill(info->si_pid, SIGUSR1);
-		bit = 0;
-		binary[binaryindex] = bit + 48;
+		ft_putstr_fd("received pid:", STDOUT_FILENO);
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		write(1, "sigusr1: 0\n", 11);
+		kill(info->si_pid, SIGUSR1);
+		ft_putstr_fd("sending: ", STDOUT_FILENO);
+		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		binary[binaryindex] = 48;
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
-		// write(1, "sigusr1: 0\n", 11);
 		binaryindex++;
 	}
 	if(sig == SIGUSR2)
 	{
-		kill(info->si_pid, SIGUSR1);
-		bit = 1;
+		ft_putstr_fd("received: ", STDOUT_FILENO);
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
-		binary[binaryindex] = bit + 48;
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		write(1, "sigusr2: 1\n", 11);
+		kill(info->si_pid, SIGUSR1);
+		ft_putstr_fd("sending: ", STDOUT_FILENO);
+		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+		// write(STDOUT_FILENO, "\n", 1);
+		binary[binaryindex] = 49;
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
-		// write(1, "sigusr2: 1\n", 11);
 		binaryindex++;
 	}
 	if(binaryindex == 8)
@@ -74,9 +79,11 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		binary[8] = '\0';
 		// write(STDOUT_FILENO, &binary, 8);
 		// write(STDOUT_FILENO, "\n", 1);
-		ft_putchar_fd(binaryToDecimal(binary), STDOUT_FILENO);
+		if(binaryToDecimal(binary) == 0)
+			ft_putstr_fd("/0", STDOUT_FILENO);
+		else
+			ft_putchar_fd(binaryToDecimal(binary), STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		// write(STDOUT_FILENO, "\n", 1);
 		binaryindex = 0;
 	}
 }
