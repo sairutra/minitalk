@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:35:13 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 14:08:05 by mynodeus         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:39:25 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void sendBits(unsigned char byte, int pid)
 			kill(pid, SIGUSR2);
 			msg.sending = 1;
 			write(1, "sigusr2: 1\n", 11);
-			usleep(1);
+			usleep(500);
 		}
 		else 
 		{
 			kill(pid, SIGUSR1);
 			msg.sending = 1;
 			write(1, "sigusr1: 0\n", 11);
-			usleep(1);
+			usleep(500);
 		}
 		index--;
 	}
@@ -71,7 +71,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	}
 	else
 	{
-		ft_putstr_fd("received pid: ", STDOUT_FILENO);
+		ft_putstr_fd("wrong pid: ", STDOUT_FILENO);
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		ucontext_t *context = (ucontext_t*)ucontext;

@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:55:22 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 14:06:54 by mynodeus         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:41:12 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	bit = 0;
 	if(sig == SIGUSR1)
 	{
+		kill(info->si_pid, SIGUSR1);
 		bit = 0;
 		binary[binaryindex] = bit + 48;
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		kill(info->si_pid, SIGUSR1);
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
 		// write(1, "sigusr1: 0\n", 11);
@@ -59,11 +59,11 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	}
 	if(sig == SIGUSR2)
 	{
+		kill(info->si_pid, SIGUSR1);
 		bit = 1;
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		binary[binaryindex] = bit + 48;
-		kill(info->si_pid, SIGUSR1);
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
 		// write(1, "sigusr2: 1\n", 11);
