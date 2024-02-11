@@ -8,9 +8,12 @@
 
 typedef struct c_msg_t
 {
-	int length;
+	int start_length;
+	int confirmation_length;
 	int sending_length;
 	int received_length;
+	int complete_length;
+	int complete_confirmation_length;
 	int sending;
 	int received;
 	int pid;
@@ -19,7 +22,8 @@ typedef struct c_msg_t
 
 typedef struct s_msg_t
 {
-	
+	int start_length;
+	int complete_length;
 	int received;
 	int sending;
 	int pid;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 12:55:22 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 15:32:20 by mynodeus         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   server.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
+/*   Updated: 2024/02/11 18:34:27 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "./libft/libft.h"
 
 int binaryindex = 0;
+struct s_msg_t msg;
 
 int 	binaryToDecimal(char * binary)
 {
@@ -44,26 +45,45 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	pc = pc -1;
 	if(sig == SIGUSR1)
 	{
-		ft_putstr_fd("received pid:", STDOUT_FILENO);
-		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		write(1, "sigusr1: 0\n", 11);
-		kill(info->si_pid, SIGUSR1);
-		ft_putstr_fd("sending: ", STDOUT_FILENO);
-		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		binary[binaryindex] = 48;
+		if(msg.start_length==1 && !msg.complete_length)
+		{
+			ft_putstr_fd("received pid1: ", STDOUT_FILENO);
+			ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			kill(info->si_pid, SIGUSR1);	
+		}
+		usleep(500);
+		// ft_putstr_fd("received pid:", STDOUT_FILENO);
+		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		// write(1, "sigusr1: 0\n", 11);
+		// kill(info->si_pid, SIGUSR1);
+		// ft_putstr_fd("sending: ", STDOUT_FILENO);
+		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		// binary[binaryindex] = 48;
+		// binaryindex++;
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
-		binaryindex++;
 	}
 	if(sig == SIGUSR2)
 	{
-		ft_putstr_fd("received: ", STDOUT_FILENO);
+		if(msg.start_length == 1 && !msg.complete_length)
+		{
+			msg.complete_length = 1;
+			msg.start_length = 0;
+			kill(info->si_pid, SIGUSR2);
+		}
+		if(!msg.start_length)
+		{
+			msg.start_length = 1;
+			kill(info->si_pid, SIGUSR2);	
+		}	
+		ft_putstr_fd("received2: ", STDOUT_FILENO);
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		write(1, "sigusr2: 1\n", 11);
-		kill(info->si_pid, SIGUSR1);
+		// kill(info->si_pid, SIGUSR1);
 		ft_putstr_fd("sending: ", STDOUT_FILENO);
 		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
@@ -72,6 +92,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		binary[binaryindex] = 49;
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
+		usleep(500);
 		binaryindex++;
 	}
 	if(binaryindex == 8)
