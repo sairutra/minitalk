@@ -24,6 +24,8 @@ typedef struct s_msg_t
 {
 	int start_length;
 	int complete_length;
+	int length;
+	int binaryindex;
 	int received;
 	int sending;
 	int pid;

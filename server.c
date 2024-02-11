@@ -6,14 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/11 18:34:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/02/11 18:59:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include "./libft/libft.h"
 
-int binaryindex = 0;
 struct s_msg_t msg;
 
 int 	binaryToDecimal(char * binary)
@@ -50,6 +49,9 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			ft_putstr_fd("received pid1: ", STDOUT_FILENO);
 			ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 			ft_putchar_fd('\n', STDOUT_FILENO);
+			msg.length += 1;
+			ft_putnbr_fd(msg.length, STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
 			kill(info->si_pid, SIGUSR1);	
 		}
 		usleep(500);
@@ -71,12 +73,16 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		if(msg.start_length == 1 && !msg.complete_length)
 		{
 			msg.complete_length = 1;
+			msg.load = malloc(sizeof(char) * msg.length);
+			if (msg.load == NULL)
+				exit(EXIT_FAILURE);
 			msg.start_length = 0;
 			kill(info->si_pid, SIGUSR2);
 		}
 		if(!msg.start_length)
 		{
 			msg.start_length = 1;
+			msg.length = 0;
 			kill(info->si_pid, SIGUSR2);	
 		}	
 		ft_putstr_fd("received2: ", STDOUT_FILENO);
@@ -89,13 +95,13 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
 		// write(STDOUT_FILENO, "\n", 1);
-		binary[binaryindex] = 49;
+		binary[msg.binaryindex] = 49;
 		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
 		// write(STDOUT_FILENO, "\n", 1);
 		usleep(500);
-		binaryindex++;
+		msg.binaryindex++;
 	}
-	if(binaryindex == 8)
+	if(msg.binaryindex == 8)
 	{
 		binary[8] = '\0';
 		// write(STDOUT_FILENO, &binary, 8);
@@ -105,7 +111,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		else
 			ft_putchar_fd(binaryToDecimal(binary), STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		binaryindex = 0;
+		msg.binaryindex = 0;
 	}
 }
 
