@@ -8,15 +8,18 @@
 
 typedef struct c_msg_t
 {
-	int received;
+	int length;
+	int sending_length;
+	int received_length;
 	int sending;
+	int received;
 	int pid;
-	char *load;
 	int printed;
 }c_msg_t;
 
 typedef struct s_msg_t
 {
+	
 	int received;
 	int sending;
 	int pid;

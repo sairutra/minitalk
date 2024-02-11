@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:35:13 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/08 15:32:55 by mynodeus         ###   ########.fr       */
+/*   Updated: 2024/02/10 14:55:55 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 #include "./libft/libft.h"
 
 struct c_msg_t msg;
+
+void sendLength(const char * str);
+{
+	int length;
+
+	length = ft_strlen(str);
+	while(length > 0)
+	{
+		msg.sending_length = 1;
+		length--;
+	}
+}
 
 void sendBits(unsigned char byte, int pid)
 {
@@ -41,20 +53,6 @@ void sendBits(unsigned char byte, int pid)
 			index--;
 		}
 	}
-}
-
-void sendBytesEnd(int pid)
-{
-	// int index;
-
-	// index = 0;
-	sendBits('\0', pid);
-	// while (index <= 7)
-	// {
-	// 	kill(pid, SIGUSR2);
-	// 	index++;
-	// 	ft_printf("sigusr2: 1\n");
-	// }
 }
 
 void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
@@ -109,13 +107,14 @@ int main (int argc, char **argv)
 		ft_printf("%s", "Argument count is wrong: ./client pid string\n");
 		exit(EXIT_FAILURE);
 	}
+	sendLength(argv[2]);
 	while(argv[2][index] != '\0')
 	{
 		printf("\n%c\n", argv[2][index]);
 		sendBits(argv[2][index], pid);
 		index++;
 	}
-	sendBytesEnd(pid);
+	sendBits('\0', pid);
 	while (1)
 	{
 		sleep(1);
