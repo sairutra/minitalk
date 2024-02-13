@@ -8,29 +8,20 @@
 
 typedef struct c_msg_t
 {
-	int start_length;
-	int confirmation_length;
-	int sending_length;
-	int received_length;
-	int complete_length;
-	int complete_confirmation_length;
-	int sending;
-	int received;
 	int pid;
-	int printed;
+	int len_status;
+	int msg_status;
 }c_msg_t;
 
 typedef struct s_msg_t
 {
-	int start_length;
-	int complete_length;
-	int length;
-	int binaryindex;
-	int received;
-	int sending;
 	int pid;
+	int len_status;
+	int msg_status;
+	int binaryindex;
+	int index;
+	int length;
 	char *load;
-	int complete;
 }s_msg_t;
 
 #endif

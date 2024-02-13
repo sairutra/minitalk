@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/11 18:59:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/02/13 19:53:37 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,73 +44,73 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	pc = pc -1;
 	if(sig == SIGUSR1)
 	{
-		if(msg.start_length==1 && !msg.complete_length)
+		if(msg.len_status==1)
 		{
-			ft_putstr_fd("received pid1: ", STDOUT_FILENO);
-			ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-			ft_putchar_fd('\n', STDOUT_FILENO);
 			msg.length += 1;
 			ft_putnbr_fd(msg.length, STDOUT_FILENO);
-			ft_putchar_fd('\n', STDOUT_FILENO);
+			ft_putstr_fd("heloooooo \n", STDOUT_FILENO);
 			kill(info->si_pid, SIGUSR1);	
 		}
+		if(msg.msg_status==1)
+		{
+			kill(info->si_pid, SIGUSR1);
+			ft_putstr_fd("worlldddd \n", STDOUT_FILENO);
+			binary[msg.binaryindex] = 48;
+			msg.binaryindex++;
+		}
 		usleep(500);
-		// ft_putstr_fd("received pid:", STDOUT_FILENO);
-		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		// ft_putchar_fd('\n', STDOUT_FILENO);
-		// write(1, "sigusr1: 0\n", 11);
-		// kill(info->si_pid, SIGUSR1);
-		// ft_putstr_fd("sending: ", STDOUT_FILENO);
-		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		// ft_putchar_fd('\n', STDOUT_FILENO);
-		// binary[binaryindex] = 48;
-		// binaryindex++;
-		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
-		// write(STDOUT_FILENO, "\n", 1);
 	}
 	if(sig == SIGUSR2)
 	{
-		if(msg.start_length == 1 && !msg.complete_length)
+		if(msg.len_status == 0)
 		{
-			msg.complete_length = 1;
+			msg.len_status = 1;
+			ft_putstr_fd("len_status = 1 \n", STDOUT_FILENO);
+			msg.length = 0;
+			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
+			kill(info->si_pid, SIGUSR2);	
+		}	
+		if(msg.len_status == 1)
+		{
+			kill(info->si_pid, SIGUSR2);
+			msg.len_status = 2;
+			ft_putstr_fd("len_status = 2 \n", STDOUT_FILENO);
+			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
 			msg.load = malloc(sizeof(char) * msg.length);
 			if (msg.load == NULL)
 				exit(EXIT_FAILURE);
-			msg.start_length = 0;
+		}
+		if(msg.len_status == 2 )
+		{
+			msg.msg_status = 1;
+			ft_putstr_fd("msg_status = 1 \n", STDOUT_FILENO);
 			kill(info->si_pid, SIGUSR2);
 		}
-		if(!msg.start_length)
+		if(msg.msg_status == 1)
 		{
-			msg.start_length = 1;
-			msg.length = 0;
-			kill(info->si_pid, SIGUSR2);	
-		}	
-		ft_putstr_fd("received2: ", STDOUT_FILENO);
-		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		write(1, "sigusr2: 1\n", 11);
-		// kill(info->si_pid, SIGUSR1);
-		ft_putstr_fd("sending: ", STDOUT_FILENO);
-		ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		// ft_putnbr_fd(info->si_pid, STDOUT_FILENO);
-		// write(STDOUT_FILENO, "\n", 1);
-		binary[msg.binaryindex] = 49;
-		// write(STDOUT_FILENO, ft_itoa(binaryindex), 1);
-		// write(STDOUT_FILENO, "\n", 1);
+			kill(info->si_pid, SIGUSR1);
+			ft_putstr_fd("msg sig 2 received \n", STDOUT_FILENO);
+			binary[msg.binaryindex] = 48;
+			msg.binaryindex++;
+		}
 		usleep(500);
-		msg.binaryindex++;
 	}
 	if(msg.binaryindex == 8)
 	{
 		binary[8] = '\0';
-		// write(STDOUT_FILENO, &binary, 8);
-		// write(STDOUT_FILENO, "\n", 1);
 		if(binaryToDecimal(binary) == 0)
-			ft_putstr_fd("/0", STDOUT_FILENO);
+		{
+			msg.msg_status=2;
+			kill(info->si_pid, SIGUSR2);
+			msg.load[msg.index] = '\0';
+			write(STDOUT_FILENO, msg.load, msg.length);
+			write(STDOUT_FILENO, "\n", 1);
+		}
 		else
-			ft_putchar_fd(binaryToDecimal(binary), STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 1);
+		{
+			msg.load[msg.index] = binaryToDecimal(binary);
+			msg.index += 1;
+		}
 		msg.binaryindex = 0;
 	}
 }
@@ -120,6 +120,9 @@ int main ()
 {	
 	struct sigaction sa;
 
+	msg.len_status = 0;
+	msg.msg_status = 0;
+	msg.index = 0;
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_sigaction = handle_sigusr;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
