@@ -47,29 +47,40 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		if(msg.len_status==1)
 		{
 			msg.length += 1;
+			ft_putstr_fd("Len: ", STDOUT_FILENO);
 			ft_putnbr_fd(msg.length, STDOUT_FILENO);
-			ft_putstr_fd("heloooooo \n", STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 			kill(info->si_pid, SIGUSR1);	
 		}
 		if(msg.msg_status==1)
 		{
 			kill(info->si_pid, SIGUSR1);
-			ft_putstr_fd("worlldddd \n", STDOUT_FILENO);
+			ft_putstr_fd("msg_status 1: sigusr1 (0)  \n", STDOUT_FILENO);
 			binary[msg.binaryindex] = 48;
 			msg.binaryindex++;
+			ft_putnbr_fd(msg.binaryindex, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		usleep(500);
 	}
 	if(sig == SIGUSR2)
 	{
-		if(msg.len_status == 0)
+		if(msg.msg_status == 1)
 		{
-			msg.len_status = 1;
-			ft_putstr_fd("len_status = 1 \n", STDOUT_FILENO);
-			msg.length = 0;
+			kill(info->si_pid, SIGUSR1);
+			ft_putstr_fd("msg_status 1: sigusr2 (1) \n", STDOUT_FILENO);
+			binary[msg.binaryindex] = 49;
+			msg.binaryindex++;
+			ft_putnbr_fd(msg.binaryindex, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+		if(msg.len_status == 2 && msg.msg_status == 0)
+		{
+			msg.msg_status = 1;
+			ft_putstr_fd("msg_status = 1 \n", STDOUT_FILENO);
 			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
-			kill(info->si_pid, SIGUSR2);	
-		}	
+			kill(info->si_pid, SIGUSR2);
+		}
 		if(msg.len_status == 1)
 		{
 			kill(info->si_pid, SIGUSR2);
@@ -80,38 +91,39 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			if (msg.load == NULL)
 				exit(EXIT_FAILURE);
 		}
-		if(msg.len_status == 2 )
+		if(msg.len_status == 0)
 		{
-			msg.msg_status = 1;
-			ft_putstr_fd("msg_status = 1 \n", STDOUT_FILENO);
-			kill(info->si_pid, SIGUSR2);
-		}
-		if(msg.msg_status == 1)
-		{
-			kill(info->si_pid, SIGUSR1);
-			ft_putstr_fd("msg sig 2 received \n", STDOUT_FILENO);
-			binary[msg.binaryindex] = 48;
-			msg.binaryindex++;
-		}
+			msg.len_status = 1;
+			ft_putstr_fd("len_status = 1 \n", STDOUT_FILENO);
+			msg.length = 0;
+			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
+			kill(info->si_pid, SIGUSR2);	
+		}	
 		usleep(500);
 	}
 	if(msg.binaryindex == 8)
 	{
 		binary[8] = '\0';
+		msg.binaryindex = 0;
 		if(binaryToDecimal(binary) == 0)
 		{
 			msg.msg_status=2;
+			ft_putstr_fd("send complete sig2\n", STDOUT_FILENO);
+			usleep(500);
 			kill(info->si_pid, SIGUSR2);
 			msg.load[msg.index] = '\0';
-			write(STDOUT_FILENO, msg.load, msg.length);
+			write(STDOUT_FILENO, msg.load, (msg.length - 1));
 			write(STDOUT_FILENO, "\n", 1);
+			msg.binaryindex = 0;
 		}
 		else
 		{
 			msg.load[msg.index] = binaryToDecimal(binary);
+			ft_putstr_fd("msg load ", STDOUT_FILENO);
+			ft_putchar_fd(msg.load[msg.index], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 			msg.index += 1;
 		}
-		msg.binaryindex = 0;
 	}
 }
 
@@ -120,6 +132,7 @@ int main ()
 {	
 	struct sigaction sa;
 
+	msg.binaryindex = 0;
 	msg.len_status = 0;
 	msg.msg_status = 0;
 	msg.index = 0;

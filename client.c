@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   client.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/13 19:56:55 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/01 12:35:13 by spenning          #+#    #+#             */
+/*   Updated: 2024/02/15 11:54:26 by mynodeus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void sendLength(const char * str, int pid)
 	while(msg.len_status != 2)
 	{
 		kill(pid, SIGUSR2);
-		ft_putstr_fd("send sigusr2 lenstatus 1\n", STDOUT_FILENO);
+		ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
+		ft_putnbr_fd(msg.len_status, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		usleep(500000);
 	}
 	while(length >= 0)
@@ -44,7 +46,7 @@ void sendLength(const char * str, int pid)
 	while(msg.len_status != 6)
 	{
 		kill(pid, SIGUSR2);
-		ft_putstr_fd("send sigusr2 lenstatus 5\n", STDOUT_FILENO);
+		ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
 		ft_putnbr_fd(msg.len_status, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		usleep(150000);
@@ -57,9 +59,10 @@ void sendBits(unsigned char byte, int pid)
 	index = 7;
 	while (index >= 0)
 	{
-		msg.msg_status = 3;
+		if(byte != '\0')
+			msg.msg_status = 3;
 		ft_putstr_fd("sending\n", STDOUT_FILENO);
-		while (msg.msg_status != 4)
+		while (msg.msg_status != 4 && msg.msg_status != 6)
 		{
 			if(byte & (1 << index))
 			{
@@ -71,7 +74,7 @@ void sendBits(unsigned char byte, int pid)
 				kill(pid, SIGUSR1);
 				write(1, "sigusr1: 0\n", 11);
 			}
-			usleep(500);
+			usleep(10000);
 			index--;
 		}
 	}
@@ -114,6 +117,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			ft_putstr_fd("msg confirmation 2 \n", STDOUT_FILENO);
 			msg.msg_status = 2;
 		}
+		ft_putstr_fd("lol \n", STDOUT_FILENO);
 		if(msg.msg_status == 5)
 		{	
 			ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
@@ -130,25 +134,29 @@ void sendmessage(char *load, int pid)
 
 	index = 0;
 	sendLength(load, pid);
-	// msg.msg_status = 1;
-	// while(msg.msg_status != 2)
-	// {
-	// 	kill(pid, SIGUSR2);
-	// 	ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
-	// 	usleep(50000);
-	// }
-	// while(load[index] != '\0')
-	// {
-	// 	printf("\n%c\n", load[index]);
-	// 	sendBits(load[index], pid);
-	// 	index++;
-	// }
-	// msg.msg_status = 5;
-	// while(msg.msg_status != 6)
-	// {
-	// 	sendBits('\0', pid);
-	// 	usleep(500);
-	// }
+	msg.msg_status = 1;
+	while(msg.msg_status != 2)
+	{
+		kill(pid, SIGUSR2);
+		ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
+		usleep(50000);
+	}
+	while(load[index] != '\0')
+	{
+		printf("\n%c\n", load[index]);
+		sendBits(load[index], pid);
+		usleep(50000);
+		index++;
+	}
+	msg.msg_status = 5;
+	while(msg.msg_status != 6)
+	{
+		ft_putstr_fd("msg status \n", STDOUT_FILENO);
+		ft_putnbr_fd(msg.msg_status, STDOUT_FILENO);
+		ft_putstr_fd("(NULL)\n", STDOUT_FILENO);
+		sendBits('\0', pid);
+		sleep(1);
+	}
 }
 
 int main (int argc, char **argv)
