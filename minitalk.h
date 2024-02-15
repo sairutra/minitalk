@@ -16,7 +16,6 @@ typedef struct c_msg_t
 
 typedef struct s_msg_t
 {
-	int pid;
 	int len_status;
 	int msg_status;
 	int binaryindex;
