@@ -161,8 +161,7 @@ void sendmessage(char *load, int pid)
 
 int main (int argc, char **argv)
 {
-	int 	pid;
-	struct sigaction sa;
+	struct 	sigaction sa;
 
 	msg.len_status = 0;
 	msg.msg_status = 0;
@@ -173,14 +172,13 @@ int main (int argc, char **argv)
 	sigaction(SIGUSR1, &sa, 0);
 	sigaction(SIGUSR2, &sa, 0);
 	ft_printf("%d\n", getpid());
-	pid = ft_atoi(argv[1]);
-	msg.pid = pid;
+	msg.pid = ft_atoi(argv[1]);
 	if (argc != 3)
 	{
 		ft_printf("%s", "Argument count is wrong: ./client pid string\n");
 		exit(EXIT_FAILURE);
 	}
-	sendmessage(argv[2], pid);
+	sendmessage(argv[2], msg.pid);
 	while (1)
 		sleep(1);
 	return(0);

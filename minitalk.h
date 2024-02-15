@@ -5,12 +5,13 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+# include <sys/types.h>
 
 typedef struct c_msg_t
 {
-	int pid;
-	int len_status;
-	int msg_status;
+	pid_t	pid;
+	int		len_status;
+	int		msg_status;
 }c_msg_t;
 
 typedef struct s_msg_t
