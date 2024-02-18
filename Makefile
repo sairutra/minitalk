@@ -4,7 +4,9 @@ FLAGS = -Wall -Werror -Wextra
 
 SERVER = server.c
 
-ClIENT = client.c
+ClIENT = client_folder/client.c
+
+CLM = client_folder/clm.c
 
 LIBFT = ./libft
 
@@ -13,7 +15,7 @@ LIBFT.A = ./libft/libft.a
 
 all: $(LIBFT.A)
 	$(CC) $(FLAGS) $(SERVER) $(LIBFT.A) -o server
-	$(CC) $(FLAGS) $(ClIENT) $(LIBFT.A) -o client
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(LIBFT.A) -o client
 
 $(LIBFT.A):
 	@$(MAKE) -C $(LIBFT) all

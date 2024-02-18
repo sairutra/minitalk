@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-#include "./libft/libft.h"
+#include "../minitalk.h"
 
 struct c_msg_t msg;
 
@@ -20,37 +19,24 @@ void sendLength(const char * str, int pid)
 	int length;
 
 	length = ft_strlen(str);
-	ft_putnbr_fd(length, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
+	if(VERBOSE == 1)
+	{
+		ft_putnbr_fd(length, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	}
 	msg.len_status = 1;
 	while(msg.len_status != 2)
-	{
-		kill(pid, SIGUSR2);
-		ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
-		ft_putnbr_fd(msg.len_status, STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		usleep(500000);
-	}
+		len_status_start(pid, msg.len_status);
 	while(length >= 0)
 	{
 		msg.len_status = 3;
 		while(msg.len_status != 4)
-		{
-			ft_putstr_fd("send sigusr1 len\n", STDOUT_FILENO);
-			kill(pid, SIGUSR1);
-			usleep(50000);
-		}
+			len_status_sending(pid);
 		length--;
 	}
 	msg.len_status = 5;
 	while(msg.len_status != 6)
-	{
-		kill(pid, SIGUSR2);
-		ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
-		ft_putnbr_fd(msg.len_status, STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		usleep(150000);
-	}
+		len_status_end(pid, msg.len_status);
 }
 
 void sendBits(unsigned char byte, int pid)
@@ -61,7 +47,8 @@ void sendBits(unsigned char byte, int pid)
 	{
 		if(byte != '\0')
 			msg.msg_status = 3;
-		ft_putstr_fd("sending\n", STDOUT_FILENO);
+		if(VERBOSE == 1)
+			ft_putstr_fd("sending\n", STDOUT_FILENO);
 		while (msg.msg_status != 4 && msg.msg_status != 6)
 		{
 			if(byte & (1 << index))
@@ -74,7 +61,7 @@ void sendBits(unsigned char byte, int pid)
 				kill(pid, SIGUSR1);
 				write(1, "sigusr1: 0\n", 11);
 			}
-			usleep(10000);
+			usleep(BIT_INTERVAL);
 			index--;
 		}
 	}
