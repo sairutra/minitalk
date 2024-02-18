@@ -52,15 +52,9 @@ void sendBits(unsigned char byte, int pid)
 		while (msg.msg_status != 4 && msg.msg_status != 6)
 		{
 			if(byte & (1 << index))
-			{
-				kill(pid, SIGUSR2);
-				write(1, "sigusr2: 1\n", 11);
-			}
+				sendBits_SigUsr2(pid);
 			else 
-			{
-				kill(pid, SIGUSR1);
-				write(1, "sigusr1: 0\n", 11);
-			}
+				sendBits_SigUsr1(pid);
 			usleep(BIT_INTERVAL);
 			index--;
 		}
@@ -119,31 +113,16 @@ void sendmessage(char *load, int pid)
 {
 	int		index;
 
-	index = 0;
 	sendLength(load, pid);
+	index = 0;
 	msg.msg_status = 1;
 	while(msg.msg_status != 2)
-	{
-		kill(pid, SIGUSR2);
-		ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
-		usleep(50000);
-	}
+		msg_status_start(pid);
 	while(load[index] != '\0')
-	{
-		printf("\n%c\n", load[index]);
-		sendBits(load[index], pid);
-		usleep(50000);
-		index++;
-	}
+		SendLoad(load[index++], pid);
 	msg.msg_status = 5;
 	while(msg.msg_status != 6)
-	{
-		ft_putstr_fd("msg status \n", STDOUT_FILENO);
-		ft_putnbr_fd(msg.msg_status, STDOUT_FILENO);
-		ft_putstr_fd("(NULL)\n", STDOUT_FILENO);
-		sendBits('\0', pid);
-		sleep(1);
-	}
+		msg_status_end(pid, msg.msg_status);
 }
 
 int main (int argc, char **argv)

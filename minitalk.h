@@ -20,6 +20,9 @@
 #  define BIT_INTERVAL 10000
 # endif
 
+# ifndef MSG_INTERVAL
+#  define MSG_INTERVAL 50000
+# endif
 typedef struct c_msg_t
 {
 	pid_t	pid;
@@ -42,4 +45,8 @@ void    len_status_sending(pid_t pid);
 void    len_status_end(pid_t pid, int len_status);
 void    sendBits_SigUsr2(pid_t  pid);
 void    sendBits_SigUsr1(pid_t  pid);
+void    msg_status_start(pid_t pid);
+void    SendLoad(char   load, pid_t   pid);
+void 	sendBits(unsigned char byte, int pid);
+void    msg_status_end(pid_t    pid, int    msg_status);
 #endif
