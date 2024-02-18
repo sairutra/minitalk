@@ -49,6 +49,6 @@ int     len_status_received(void)
 int     len_status_complete(void)
 {
     if(VERBOSE == 1)
-        ft_putstr_fd("message received len \n", STDOUT_FILENO);
+        ft_putstr_fd("len complete 6 \n", STDOUT_FILENO);
     return(6);
 }
