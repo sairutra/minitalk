@@ -52,4 +52,7 @@ void    msg_status_end(pid_t    pid, int    msg_status);
 int     len_status_received(void);
 int     len_status_confirmation(void);
 int     len_status_complete(void);
+int     msg_status_received(void);
+int     msg_status_confirmation(void);
+int     msg_status_complete(void);
 #endif

@@ -73,10 +73,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		if(msg.len_status == 3)
 			msg.len_status = len_status_received();
 		if(msg.msg_status == 3)
-		{
-			ft_putstr_fd("message received msg\n", STDOUT_FILENO);
-			msg.msg_status = 4;
-		}
+			msg.msg_status = msg_status_received();
 	}
 	if (sig == SIGUSR2)
 	{
@@ -85,16 +82,9 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		if(msg.len_status == 5)
 			msg.len_status = len_status_complete();
 		if(msg.msg_status == 1)
-		{
-			ft_putstr_fd("msg confirmation 2 \n", STDOUT_FILENO);
-			msg.msg_status = 2;
-		}
+			msg.msg_status = msg_status_confirmation();
 		if(msg.msg_status == 5)
-		{	
-			ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
-			msg.msg_status = 6;
-		}
-		
+			msg.msg_status = msg_status_complete();
 	}
 }
 

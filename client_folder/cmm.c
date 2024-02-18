@@ -46,3 +46,23 @@ void    msg_status_end(pid_t    pid, int    msg_status)
     sleep(1);
 }
 
+int     msg_status_confirmation(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("msg confirmation 2 \n", STDOUT_FILENO);
+    return(2);
+}
+
+int     msg_status_received(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("message received msg\n", STDOUT_FILENO);
+    return(4);
+}
+
+int     msg_status_complete(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
+    return(6);
+}
