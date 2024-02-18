@@ -71,10 +71,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	if (sig == SIGUSR1)
 	{
 		if(msg.len_status == 3)
-		{
-			ft_putstr_fd("message received len \n", STDOUT_FILENO);
-			msg.len_status = 4;
-		}
+			msg.len_status = len_status_received();
 		if(msg.msg_status == 3)
 		{
 			ft_putstr_fd("message received msg\n", STDOUT_FILENO);
@@ -84,21 +81,14 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	if (sig == SIGUSR2)
 	{
 		if(msg.len_status == 1)
-		{
-			ft_putstr_fd("len confirmation 2 \n", STDOUT_FILENO);
-			msg.len_status = 2;
-		}
+			msg.len_status = len_status_confirmation();
 		if(msg.len_status == 5)
-		{	
-			ft_putstr_fd("len complete 6 \n", STDOUT_FILENO);
-			msg.len_status = 6;
-		}
+			msg.len_status = len_status_complete();
 		if(msg.msg_status == 1)
 		{
 			ft_putstr_fd("msg confirmation 2 \n", STDOUT_FILENO);
 			msg.msg_status = 2;
 		}
-		ft_putstr_fd("lol \n", STDOUT_FILENO);
 		if(msg.msg_status == 5)
 		{	
 			ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);

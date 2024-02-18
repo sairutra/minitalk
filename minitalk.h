@@ -49,4 +49,7 @@ void    msg_status_start(pid_t pid);
 void    SendLoad(char   load, pid_t   pid);
 void 	sendBits(unsigned char byte, int pid);
 void    msg_status_end(pid_t    pid, int    msg_status);
+int     len_status_received(void);
+int     len_status_confirmation(void);
+int     len_status_complete(void);
 #endif

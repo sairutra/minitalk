@@ -31,3 +31,24 @@ void    len_status_end(pid_t pid, int len_status)
     }
     usleep(LEN_INTERVAL);
 }
+
+int     len_status_confirmation(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("len confirmation 2 \n", STDOUT_FILENO);
+    return(2);
+}
+
+int     len_status_received(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("message received len \n", STDOUT_FILENO);
+    return(4);
+}
+
+int     len_status_complete(void)
+{
+    if(VERBOSE == 1)
+        ft_putstr_fd("message received len \n", STDOUT_FILENO);
+    return(6);
+}
