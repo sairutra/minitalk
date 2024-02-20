@@ -26,7 +26,7 @@ void    SendLoad(char   load, pid_t   pid)
     usleep(MSG_INTERVAL);
 }
 
-void initialize_struct(struct c_msg_t *msg)
+void initialize_client_struct(struct c_msg_t *msg)
 {
     if(VERBOSE == 1)
         ft_putstr_fd("struct members initaliazed to 0\n", STDOUT_FILENO);

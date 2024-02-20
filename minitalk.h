@@ -23,6 +23,11 @@
 # ifndef MSG_INTERVAL
 #  define MSG_INTERVAL 50000
 # endif
+
+# ifndef SRV_INTERVAL
+#  define SRV_INTERVAL 500
+# endif
+
 typedef struct c_msg_t
 {
 	pid_t	pid;
@@ -40,6 +45,8 @@ typedef struct s_msg_t
 	char *load;
 }s_msg_t;
 
+// client
+
 void    len_status_start(pid_t pid, int len_status);
 void    len_status_sending(pid_t pid);
 void    len_status_end(pid_t pid, int len_status);
@@ -55,5 +62,10 @@ int     len_status_complete(void);
 int     msg_status_received(void);
 int     msg_status_confirmation(void);
 int     msg_status_complete(void);
-void 	initialize_struct(struct c_msg_t *msg);
+void 	initialize_client_struct(struct c_msg_t *msg);
+
+// server
+
+void 	initialize_server_struct(struct s_msg_t *msg);
+
 #endif

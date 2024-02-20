@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-#include "./libft/libft.h"
+#include "../minitalk.h"
 
 struct s_msg_t msg;
 
@@ -61,7 +60,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			ft_putnbr_fd(msg.binaryindex, STDOUT_FILENO);
 			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
-		usleep(500);
+		usleep(SRV_INTERVAL);
 	}
 	if(sig == SIGUSR2)
 	{
@@ -99,7 +98,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
 			kill(info->si_pid, SIGUSR2);	
 		}	
-		usleep(500);
+		usleep(SRV_INTERVAL);
 	}
 	if(msg.binaryindex == 8)
 	{
@@ -109,7 +108,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 		{
 			msg.msg_status=2;
 			ft_putstr_fd("send complete sig2\n", STDOUT_FILENO);
-			usleep(500);
+			usleep(SRV_INTERVAL);
 			kill(info->si_pid, SIGUSR2);
 			msg.load[msg.index] = '\0';
 			write(STDOUT_FILENO, msg.load, (msg.length - 1));
@@ -132,10 +131,7 @@ int main ()
 {	
 	struct sigaction sa;
 
-	msg.binaryindex = 0;
-	msg.len_status = 0;
-	msg.msg_status = 0;
-	msg.index = 0;
+	initialize_server_struct(&msg);
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_sigaction = handle_sigusr;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
@@ -144,8 +140,6 @@ int main ()
 	sigaction(SIGUSR2, &sa, 0);
 	ft_printf("%d\n", getpid());
 	while (1)
-	{
 		sleep(1);
-	}
 	return(0);
 }
