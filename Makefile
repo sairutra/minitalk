@@ -10,6 +10,8 @@ CLM = client_folder/clm.c
 
 CMM = client_folder/cmm.c
 
+CMS = client_folder/cms.c
+
 LIBFT = ./libft
 
 LIBFT.A = ./libft/libft.a
@@ -17,7 +19,7 @@ LIBFT.A = ./libft/libft.a
 
 all: $(LIBFT.A)
 	$(CC) $(FLAGS) $(SERVER) $(LIBFT.A) -o server
-	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(LIBFT.A) -o client
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CMS) $(LIBFT.A) -o client
 
 $(LIBFT.A):
 	@$(MAKE) -C $(LIBFT) all

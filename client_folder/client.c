@@ -103,14 +103,16 @@ void sendmessage(char *load, int pid)
 	msg.msg_status = 5;
 	while(msg.msg_status != 6)
 		msg_status_end(pid, msg.msg_status);
+	initialize_struct(&msg);
+	ft_putstr_fd("Server ready for another message\n", STDOUT_FILENO);
+	exit(EXIT_SUCCESS);
 }
 
 int main (int argc, char **argv)
 {
 	struct 	sigaction sa;
 
-	msg.len_status = 0;
-	msg.msg_status = 0;
+	initialize_struct(&msg);
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_sigaction = handle_sigusr;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;

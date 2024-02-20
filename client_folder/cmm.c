@@ -14,14 +14,6 @@ void    sendBits_SigUsr1(pid_t  pid)
         ft_putstr_fd("sigusr1: 0\n", STDOUT_FILENO);
 }
 
-void    msg_status_start(pid_t pid)
-{
-    kill(pid, SIGUSR2);
-    if(VERBOSE == 1)
-        ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
-    usleep(MSG_INTERVAL);
-}
-
 void    SendLoad(char   load, pid_t   pid)
 {
     if (VERBOSE == 1)
@@ -34,35 +26,11 @@ void    SendLoad(char   load, pid_t   pid)
     usleep(MSG_INTERVAL);
 }
 
-void    msg_status_end(pid_t    pid, int    msg_status)
+void initialize_struct(struct c_msg_t *msg)
 {
     if(VERBOSE == 1)
-    {
-        ft_putstr_fd("msg status \n", STDOUT_FILENO);
-        ft_putnbr_fd(msg_status, STDOUT_FILENO);
-        ft_putstr_fd("(NULL)\n", STDOUT_FILENO);
-    }
-    sendBits('\0', pid);
-    sleep(1);
-}
-
-int     msg_status_confirmation(void)
-{
-    if(VERBOSE == 1)
-        ft_putstr_fd("msg confirmation 2 \n", STDOUT_FILENO);
-    return(2);
-}
-
-int     msg_status_received(void)
-{
-    if(VERBOSE == 1)
-        ft_putstr_fd("message received msg\n", STDOUT_FILENO);
-    return(4);
-}
-
-int     msg_status_complete(void)
-{
-    if(VERBOSE == 1)
-        ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
-    return(6);
+        ft_putstr_fd("struct members initaliazed to 0\n", STDOUT_FILENO);
+    msg->pid = 0;
+    msg->msg_status = 0;
+    msg->len_status = 0;
 }
