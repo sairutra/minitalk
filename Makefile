@@ -24,8 +24,8 @@ LIBFT.A = ./libft/libft.a
 
 
 all: $(LIBFT.A)
-	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SES) $(LIBFT.A)  -D SRV_INTERVAL=1000 -o server
-	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CMS) $(LIBFT.A)  -D LEN_INTERVAL=1000 -D BIT_INTERVAL=1500 -D MSG_INTERVAL=1000 -o client
+	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SES) $(LIBFT.A)  -D SRV_INTERVAL=600 -o server
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CMS) $(LIBFT.A)  -D LEN_INTERVAL=20000 -D BIT_INTERVAL=2500 -D MSG_INTERVAL=20000 -o client
 
 $(LIBFT.A):
 	@$(MAKE) -C $(LIBFT) all

@@ -2,6 +2,7 @@
 
 void print_string(struct s_msg_t *msg, pid_t pid)
 {
+    char *temp;
     if(VERBOSE == 1)
         ft_putstr_fd("send complete sig2\n", STDOUT_FILENO);
     usleep(SRV_INTERVAL);
@@ -9,7 +10,8 @@ void print_string(struct s_msg_t *msg, pid_t pid)
     msg->load[msg->index] = '\0';
     write(STDOUT_FILENO, msg->load, (msg->length - 1));
     write(STDOUT_FILENO, "\n", 1);
-    free(msg->load);
+    temp = msg->load;
+    free(temp); 
     initialize_server_struct(msg);
     ft_putstr_fd("Server ready to receive string again\n", STDOUT_FILENO);
 }
