@@ -44,86 +44,25 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 	if(sig == SIGUSR1)
 	{
 		if(msg.len_status==1)
-		{
-			msg.length += 1;
-			ft_putstr_fd("Len: ", STDOUT_FILENO);
-			ft_putnbr_fd(msg.length, STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
-			kill(info->si_pid, SIGUSR1);	
-		}
+			msg_length_init(&msg, info->si_pid);
 		if(msg.msg_status==1)
-		{
-			kill(info->si_pid, SIGUSR1);
-			ft_putstr_fd("msg_status 1: sigusr1 (0)  \n", STDOUT_FILENO);
-			binary[msg.binaryindex] = 48;
-			msg.binaryindex++;
-			ft_putnbr_fd(msg.binaryindex, STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		}
+			server_sigusr1(&msg, binary, info->si_pid);
 		usleep(SRV_INTERVAL);
 	}
 	if(sig == SIGUSR2)
 	{
 		if(msg.msg_status == 1)
-		{
-			kill(info->si_pid, SIGUSR1);
-			ft_putstr_fd("msg_status 1: sigusr2 (1) \n", STDOUT_FILENO);
-			binary[msg.binaryindex] = 49;
-			msg.binaryindex++;
-			ft_putnbr_fd(msg.binaryindex, STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		}
+			server_sigusr2(&msg, binary, info->si_pid);
 		if(msg.len_status == 2 && msg.msg_status == 0)
-		{
-			msg.msg_status = 1;
-			ft_putstr_fd("msg_status = 1 \n", STDOUT_FILENO);
-			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
-			kill(info->si_pid, SIGUSR2);
-		}
+			msg_status_confirm(&msg, info->si_pid);
 		if(msg.len_status == 1)
-		{
-			kill(info->si_pid, SIGUSR2);
-			msg.len_status = 2;
-			ft_putstr_fd("len_status = 2 \n", STDOUT_FILENO);
-			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
-			msg.load = malloc(sizeof(char) * msg.length);
-			if (msg.load == NULL)
-				exit(EXIT_FAILURE);
-		}
+			len_status_completion(&msg, info->si_pid);
 		if(msg.len_status == 0)
-		{
-			msg.len_status = 1;
-			ft_putstr_fd("len_status = 1 \n", STDOUT_FILENO);
-			msg.length = 0;
-			ft_putstr_fd("send sigusr 2 \n", STDOUT_FILENO);
-			kill(info->si_pid, SIGUSR2);	
-		}	
+			len_status_confirm(&msg, info->si_pid);
 		usleep(SRV_INTERVAL);
 	}
 	if(msg.binaryindex == 8)
-	{
-		binary[8] = '\0';
-		msg.binaryindex = 0;
-		if(binaryToDecimal(binary) == 0)
-		{
-			msg.msg_status=2;
-			ft_putstr_fd("send complete sig2\n", STDOUT_FILENO);
-			usleep(SRV_INTERVAL);
-			kill(info->si_pid, SIGUSR2);
-			msg.load[msg.index] = '\0';
-			write(STDOUT_FILENO, msg.load, (msg.length - 1));
-			write(STDOUT_FILENO, "\n", 1);
-			msg.binaryindex = 0;
-		}
-		else
-		{
-			msg.load[msg.index] = binaryToDecimal(binary);
-			ft_putstr_fd("msg load ", STDOUT_FILENO);
-			ft_putchar_fd(msg.load[msg.index], STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
-			msg.index += 1;
-		}
-	}
+		string_initializer(&msg, binary, info->si_pid);
 }
 
 

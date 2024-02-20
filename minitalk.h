@@ -67,5 +67,13 @@ void 	initialize_client_struct(struct c_msg_t *msg);
 // server
 
 void 	initialize_server_struct(struct s_msg_t *msg);
-
+void    msg_length_init(struct s_msg_t *msg, pid_t pid);
+void    len_status_confirm(struct s_msg_t *msg, pid_t pid);
+void    len_status_completion(struct s_msg_t *msg, pid_t pid);
+void    msg_status_confirm(struct s_msg_t *msg, pid_t pid);
+void    server_sigusr1(struct s_msg_t *msg, char *binary, pid_t pid);
+void    server_sigusr2(struct s_msg_t *msg, char *binary, pid_t pid);
+void 	string_initializer(struct s_msg_t *msg, char *binary, pid_t pid);
+void 	print_string(struct s_msg_t *msg, pid_t pid);
+int 	binaryToDecimal(char * binary);
 #endif

@@ -14,13 +14,17 @@ CMS = client_folder/cms.c
 
 SMM = server_folder/smm.c
 
+SLM = server_folder/slm.c
+
+SES = server_folder/ses.c
+
 LIBFT = ./libft
 
 LIBFT.A = ./libft/libft.a
 
 
 all: $(LIBFT.A)
-	$(CC) $(FLAGS) $(SERVER) $(SMM) $(LIBFT.A) -o server
+	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SES) $(LIBFT.A) -o server
 	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CMS) $(LIBFT.A) -o client
 
 $(LIBFT.A):
