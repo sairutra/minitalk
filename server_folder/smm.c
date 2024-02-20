@@ -9,7 +9,8 @@ void initialize_server_struct(struct s_msg_t *msg)
 	msg->msg_status = 0;
 	msg->index = 0;
 	msg->length = 0;
-    msg->load = ft_memset(msg->load, 0, ft_strlen(msg->load));
+    if(msg->load)
+        msg->load = ft_memset(msg->load, 0, ft_strlen(msg->load));
 }
 
 
