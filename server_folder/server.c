@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/02/13 19:53:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/14 11:22:03 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int 	binaryToDecimal(char * binary)
 void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 {
 	static char binary[9];
-  	ucontext_t *context = (ucontext_t*)ucontext;
-  	unsigned long pc = context->uc_stack.ss_flags;
-	pc = pc -1;
+	(void)ucontext;
 	if(sig == SIGUSR1)
 	{
 		if(msg.len_status==1)

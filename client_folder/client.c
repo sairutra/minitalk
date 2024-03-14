@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mynodeus <mynodeus@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 12:35:13 by spenning          #+#    #+#             */
-/*   Updated: 2024/02/15 11:54:26 by mynodeus         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   client.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
+/*   Updated: 2024/03/14 11:22:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,8 @@ void sendBits(unsigned char byte, int pid)
 
 void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 {
-	ucontext_t *context = (ucontext_t*)ucontext;
-  	unsigned long pc = context->uc_stack.ss_flags;
-	pc = pc -1;
-	int pid = info->si_pid;
-	pid = pid -1;
+	(void)ucontext;
+	(void)info;
 	if (sig == SIGUSR1)
 	{
 		if(msg.len_status == 3)
