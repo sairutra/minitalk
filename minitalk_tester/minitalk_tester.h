@@ -17,6 +17,9 @@
 # define ClIOUTLOGS "logs/clientoutput.txt"
 # define SEROUT "logs/server_start.txt"
 # define SERLOGS "logs/serverlogs.txt"
+# define SERTEST "testtemp/serverpid.txt"
+# define SERVOUT "testtemp/serverout.txt"
+# define SERClILOGS "logs/clientserverlogs.txt"
 
 # include <unistd.h>
 # include <signal.h>
@@ -29,7 +32,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <string.h>
+# include <fcntl.h>
 
 void client_tests(char** envp);
 void server_tests(char** envp);
+void client_server_tests(char** envp);
 #endif
