@@ -13,8 +13,10 @@
 # define WHT   "\x1B[37m"
 # define RESET "\x1B[0m"
 
-# define CLIENTLOGS "../logs/clientlogs.txt"
-# define ClIOUTLOGS "../logs/clientoutput.txt"
+# define CLIENTLOGS "logs/clientlogs.txt"
+# define ClIOUTLOGS "logs/clientoutput.txt"
+# define SEROUT "logs/server_start.txt"
+# define SERLOGS "logs/serverlogs.txt"
 
 # include <unistd.h>
 # include <signal.h>
@@ -26,6 +28,8 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 void client_tests(char** envp);
+void server_tests(char** envp);
 #endif
