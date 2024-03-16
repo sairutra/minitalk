@@ -20,7 +20,7 @@ MINI:
 	@$(MAKE) --no-print-directory -C $(MINI) clean
 
 TESTS:
-	@$(CC) $(CFLAGS) $(TEST) $(CLIENT_TEST) $(SERVER_TEST) $(CLIENT_SERVER_TEST) && ./a.out
+	@$(CC) $(CFLAGS) $(TEST) $(CLIENT_TEST) $(SERVER_TEST) $(CLIENT_SERVER_TEST) -lbsd && ./a.out
 	rm a.out
 
 WELCOME:

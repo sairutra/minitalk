@@ -32,7 +32,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <errno.h>
-# include <string.h>
+# include <bsd/string.h>
 # include <fcntl.h>
 
 void client_tests(char** envp);
