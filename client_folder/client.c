@@ -42,11 +42,15 @@ void sendLength(const char * str, int pid)
 void sendBits(unsigned char byte, int pid)
 {
 	int		index;
+	int 	sleepindex;
 	index = 7;
+	sleepindex = 0;
 	while (index >= 0)
 	{
 		if(byte != '\0')
 			msg.msg_status = 3;
+		if(byte == '\0')
+			msg.msg_status = 5;
 		if(VERBOSE == 1)
 			ft_putstr_fd("sending\n", STDOUT_FILENO);
 		while (msg.msg_status != 4 && msg.msg_status != 6)
@@ -55,9 +59,15 @@ void sendBits(unsigned char byte, int pid)
 				sendBits_SigUsr2(pid);
 			else 
 				sendBits_SigUsr1(pid);
-			usleep(BIT_INTERVAL);
-			index--;
+			while((msg.msg_status != 4 && msg.msg_status != 6) && sleepindex < 500000)
+			{
+				usleep(1);
+				sleepindex++;
+			}
+			sleepindex = 0;
+			// usleep(BIT_INTERVAL);
 		}
+			index--;
 	}
 }
 
@@ -71,6 +81,8 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			msg.len_status = len_status_received();
 		if(msg.msg_status == 3)
 			msg.msg_status = msg_status_received();
+		if(msg.msg_status == 5)
+			msg.msg_status = 6;
 	}
 	if (sig == SIGUSR2)
 	{
@@ -80,7 +92,7 @@ void handle_sigusr(int sig, siginfo_t* info, void *ucontext)
 			msg.len_status = len_status_complete();
 		if(msg.msg_status == 1)
 			msg.msg_status = msg_status_confirmation();
-		if(msg.msg_status == 5)
+		if(msg.msg_status == 6)
 			msg.msg_status = msg_status_complete();
 	}
 }
@@ -98,7 +110,7 @@ void sendmessage(char *load, int pid)
 	while(load[index] != '\0')
 		SendLoad(load[index++], pid);
 	msg.msg_status = 5;
-	while(msg.msg_status != 6)
+	while(msg.msg_status != 7)
 		msg_status_end(pid, msg.msg_status);
 	initialize_client_struct(&msg);
 	ft_putstr_fd("Server ready for another message\n", STDOUT_FILENO);

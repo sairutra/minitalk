@@ -38,5 +38,5 @@ int     msg_status_complete(void)
 {
     if(VERBOSE == 1)
         ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
-    return(6);
+    return(7);
 }

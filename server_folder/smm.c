@@ -26,28 +26,28 @@ void    msg_status_confirm(struct s_msg_t *msg, pid_t pid)
 
 void    server_sigusr1(struct s_msg_t *msg, char *binary, pid_t pid)
 {
-    kill(pid, SIGUSR1);
-    if(VERBOSE == 1)
-        ft_putstr_fd("msg_status 1: sigusr1 (0)  \n", STDOUT_FILENO);
     binary[msg->binaryindex] = 48;
     msg->binaryindex++;
+    if(VERBOSE == 1)
+        ft_putstr_fd("msg_status 1: sigusr1 (0)  \n", STDOUT_FILENO);
     if(VERBOSE == 1)
     {
         ft_putnbr_fd(msg->binaryindex, STDOUT_FILENO);
         ft_putstr_fd("\n", STDOUT_FILENO);
     }
+    kill(pid, SIGUSR1);
 }
 
 void    server_sigusr2(struct s_msg_t *msg, char *binary, pid_t pid)
 {
-    kill(pid, SIGUSR1);
-    if(VERBOSE == 1)
-        ft_putstr_fd("msg_status 1: sigusr2 (1) \n", STDOUT_FILENO);
     binary[msg->binaryindex] = 49;
     msg->binaryindex++;
+    if(VERBOSE == 1)
+        ft_putstr_fd("msg_status 1: sigusr2 (1) \n", STDOUT_FILENO);
     if(VERBOSE == 1)
     {
         ft_putnbr_fd(msg->binaryindex, STDOUT_FILENO);
         ft_putstr_fd("\n", STDOUT_FILENO);
     }
+    kill(pid, SIGUSR1);
 }

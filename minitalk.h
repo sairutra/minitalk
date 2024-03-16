@@ -30,18 +30,18 @@
 
 typedef struct c_msg_t
 {
-	pid_t	pid;
-	int		len_status;
-	int		msg_status;
+	volatile sig_atomic_t		pid;
+	volatile sig_atomic_t		len_status;
+	volatile sig_atomic_t		msg_status;
 }c_msg_t;
 
 typedef struct s_msg_t
 {
-	int len_status;
-	int msg_status;
-	int binaryindex;
-	int index;
-	int length;
+	volatile sig_atomic_t len_status;
+	volatile sig_atomic_t msg_status;
+	volatile sig_atomic_t binaryindex;
+	volatile sig_atomic_t index;
+	volatile sig_atomic_t length;
 	char *load;
 }s_msg_t;
 

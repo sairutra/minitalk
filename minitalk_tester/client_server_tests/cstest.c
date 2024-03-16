@@ -184,7 +184,7 @@ int client_server_test(int testnum, char** argv, char** envp)
 		printf(RED "%d FAIL " RESET, testnum);
 		freopen(SERClILOGS, "a+", stdout);
 		printf("testnum: %d\n", testnum);
-		printf("test case: %s", argv[2]);
+		printf("test case: %s\n", argv[2]);
 		printf("returned process status (wstatus): %d\n", wstatus);
 		printf("returned server check (sstatus): %d\n", sstatus);
 		printf("-------------------------\n");
