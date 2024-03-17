@@ -1,4 +1,5 @@
 libft
 client
 server
-*.txt
+logs/*.txt
+testtemp/*.txt

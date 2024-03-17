@@ -20,6 +20,12 @@
 # define SERTEST "testtemp/serverpid.txt"
 # define SERVOUT "testtemp/serverout.txt"
 # define SERClILOGS "logs/clientserverlogs.txt"
+# define UNICODE_TEST "test_cases/unicode.txt"
+# define OOOOOO1_TEST "test_cases/1.txt"
+# define OOOOO10_TEST "test_cases/10.txt"
+# define OOOO100_TEST "test_cases/100.txt"
+# define OOO1000_TEST "test_cases/1000.txt"
+# define OO10000_TEST "test_cases/10000.txt"
 
 # include <unistd.h>
 # include <signal.h>

@@ -27,6 +27,7 @@ WELCOME:
 	@$(CC) $(CFLAGS) $(WELCOME) && ./a.out
 
 clean:
-	rm logs/*
-	rm client
-	rm server
+	rm -rf logs
+	rm -rf client
+	rm -rf server
+	rm -rf testtemp
