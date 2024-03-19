@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:36:41 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/19 16:05:10 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-struct c_msg_t	g_msg;
+static struct c_msg_t	g_msg;
 
 void	sendlength(const char *str, int pid)
 {
@@ -77,7 +77,7 @@ void	handle_sigusr(int sig, siginfo_t *info, void *ucontext)
 		if (g_msg.len_status == 3)
 			g_msg.len_status = len_status_received();
 		if (g_msg.msg_stat == 3)
-			g_msg.msg_stat = msg_stat_received();
+			g_msg.msg_stat = msg_status_received();
 		if (g_msg.msg_stat == 5)
 			g_msg.msg_stat = 6;
 	}
@@ -88,9 +88,9 @@ void	handle_sigusr(int sig, siginfo_t *info, void *ucontext)
 		if (g_msg.len_status == 5)
 			g_msg.len_status = len_status_complete();
 		if (g_msg.msg_stat == 1)
-			g_msg.msg_stat = msg_stat_confirmation();
+			g_msg.msg_stat = msg_status_confirmation();
 		if (g_msg.msg_stat == 6)
-			g_msg.msg_stat = msg_stat_complete();
+			g_msg.msg_stat = msg_status_complete();
 	}
 }
 
@@ -102,12 +102,12 @@ void	sendmessage(char *load, int pid)
 	index = 0;
 	g_msg.msg_stat = 1;
 	while (g_msg.msg_stat != 2)
-		msg_stat_start(pid);
+		msg_status_start(pid);
 	while (load[index] != '\0')
 		sendload(load[index++], pid);
 	g_msg.msg_stat = 5;
 	while (g_msg.msg_stat != 7)
-		msg_stat_end(pid, g_msg.msg_stat);
+		msg_status_end(pid, g_msg.msg_stat);
 	initialize_client_struct(&g_msg);
 	ft_putstr_fd("Server ready for another message\n", STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
