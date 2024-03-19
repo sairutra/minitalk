@@ -280,7 +280,9 @@ are used to hold information about the server pid, length communication, and mes
 
 5 = end (send end signal to server)
 
-6 = complete (confirmation end signal received by server )
+6 = complete (confirmation end signal received from server )
+
+7 = fin (completion of message delivery )
 
 ## s_msg_t
 

@@ -32,7 +32,7 @@ typedef struct c_msg_t
 {
 	volatile sig_atomic_t		pid;
 	volatile sig_atomic_t		len_status;
-	volatile sig_atomic_t		msg_status;
+	volatile sig_atomic_t		msg_stat;
 }c_msg_t;
 
 typedef struct s_msg_t
@@ -50,11 +50,11 @@ typedef struct s_msg_t
 void    len_status_start(pid_t pid, int len_status);
 void    len_status_sending(pid_t pid);
 void    len_status_end(pid_t pid, int len_status);
-void    sendBits_SigUsr2(pid_t  pid);
-void    sendBits_SigUsr1(pid_t  pid);
+void    sendbits_sigusr2(pid_t  pid);
+void    sendbits_sigusr1(pid_t  pid);
 void    msg_status_start(pid_t pid);
-void    SendLoad(char   load, pid_t   pid);
-void 	sendBits(unsigned char byte, int pid);
+void    sendload(char   load, pid_t   pid);
+void 	sendbits(unsigned char byte, int pid);
 void    msg_status_end(pid_t    pid, int    msg_status);
 int     len_status_received(void);
 int     len_status_confirmation(void);
