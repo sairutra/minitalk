@@ -47,15 +47,15 @@ typedef struct s_msg_t
 
 // client
 
-void    len_status_start(pid_t pid, int len_status);
-void    len_status_sending(pid_t pid);
-void    len_status_end(pid_t pid, int len_status);
+void    len_status_start(pid_t pid, int len_status, struct c_msg_t *msg);
+void    len_status_sending(pid_t pid, struct c_msg_t *msg);
+void    len_status_end(pid_t pid, int len_status, struct c_msg_t *msg);
 void    sendbits_sigusr2(pid_t  pid);
 void    sendbits_sigusr1(pid_t  pid);
-void    msg_status_start(pid_t pid);
+void    msg_status_start(pid_t pid, struct c_msg_t *msg);
 void    sendload(char   load, pid_t   pid);
 void 	sendbits(unsigned char byte, int pid);
-void    msg_status_end(pid_t    pid, int    msg_status);
+void    msg_status_end(pid_t    pid, int    msg_status, struct c_msg_t *msg);
 int     len_status_received(void);
 int     len_status_confirmation(void);
 int     len_status_complete(void);

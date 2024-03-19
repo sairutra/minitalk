@@ -6,30 +6,44 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:10:49 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:37:03 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/19 21:33:14 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	msg_status_start(pid_t pid)
+void	msg_status_start(pid_t pid, c_msg_t *g_msg)
 {
-	kill(pid, SIGUSR2);
+	int sleepindex;
+
+	sleepindex = 0;
+	while (g_msg->msg_stat != 2)
+	{
+		kill(pid, SIGUSR2);
+		while (g_msg->len_status != 2 && sleepindex < 100000)
+			sleepindex++;
+	}
 	if (VERBOSE == 1)
 		ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
-	usleep(MSG_INTERVAL);
 }
 
-void	msg_status_end(pid_t pid, int msg_status)
+void	msg_status_end(pid_t pid, int msg_status, c_msg_t *g_msg)
 {
+	int sleepindex;
+
+	sleepindex = 0;
+	while (g_msg->msg_stat != 7)
+	{
+		kill(pid, SIGUSR2);
+		while (g_msg->len_status != 2 && sleepindex < 1000000)
+			sleepindex++;
+	}
 	if (VERBOSE == 1)
 	{
 		ft_putstr_fd("msg status \n", STDOUT_FILENO);
 		ft_putnbr_fd(msg_status, STDOUT_FILENO);
 		ft_putstr_fd("(NULL)\n", STDOUT_FILENO);
 	}
-	sendbits('\0', pid);
-	sleep(1);
 }
 
 int	msg_status_confirmation(void)
@@ -49,6 +63,6 @@ int	msg_status_received(void)
 int	msg_status_complete(void)
 {
 	if (VERBOSE == 1)
-		ft_putstr_fd("msg complete 6 \n", STDOUT_FILENO);
-	return (7);
+		ft_putstr_fd("msg complete 5 \n", STDOUT_FILENO);
+	return (5);
 }

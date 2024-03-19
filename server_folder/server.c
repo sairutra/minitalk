@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 16:20:49 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/19 21:26:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	handle_sigusr(int sig, siginfo_t *info, void *ucontext)
 			msg_length_init(&g_msg, info->si_pid);
 		if (g_msg.msg_status == 1)
 			server_sigusr1(&g_msg, binary, info->si_pid);
-		usleep(SRV_INTERVAL);
 	}
 	if (sig == SIGUSR2)
 	{
@@ -56,7 +55,6 @@ void	handle_sigusr(int sig, siginfo_t *info, void *ucontext)
 			len_status_completion(&g_msg, info->si_pid);
 		if (g_msg.len_status == 0)
 			len_status_confirm(&g_msg, info->si_pid);
-		usleep(SRV_INTERVAL);
 	}
 	if (g_msg.binaryindex == 8)
 		string_initializer(&g_msg, binary, info->si_pid);
@@ -73,7 +71,8 @@ int	main(void)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, 0);
 	sigaction(SIGUSR2, &sa, 0);
-	ft_printf("%d\n", getpid());
+	ft_putnbr_fd(getpid(), 1);
+	ft_putstr_fd("\n", 1);
 	while (1)
 		sleep(1);
 	return (0);

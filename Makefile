@@ -1,6 +1,6 @@
 CC = cc
 
-FLAGS = -Wall -Werror -Wextra 
+FLAGS = -Wall -Werror -Wextra -O3
 
 SERVER = server_folder/server.c
 
@@ -38,7 +38,7 @@ all: $(LIBFT.A)
 
 verbose: $(LIBFT.A)
 	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A)  -D VERBOSE=1 -D SRV_INTERVAL=$(MS_SRV_INTERVAL) -o server
-	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(LIBFT.A)  -D VERBOSE=1 -D LEN_INTERVAL=$(MS_LEN_INTERVAL) -D BIT_INTERVAL=$(MS_BIT_INTERVAL) -D MSG_INTERVAL=$(MS_MSG_INTERVAL) -o client
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(CLM_EXT) $(LIBFT.A)  -D VERBOSE=1 -D LEN_INTERVAL=$(MS_LEN_INTERVAL) -D BIT_INTERVAL=$(MS_BIT_INTERVAL) -D MSG_INTERVAL=$(MS_MSG_INTERVAL) -o client
 
 $(LIBFT.A):
 	@$(MAKE) -C $(LIBFT) all
