@@ -205,7 +205,7 @@ char* readfile(char* path)
 	int fd;
 	char buf[100000];
 	char *testcase;
-	size_t len;
+	size_t len = 0;
 
 	fd = open(path, O_RDONLY);
 	if(fd == -1)
