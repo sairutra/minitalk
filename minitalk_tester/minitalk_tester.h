@@ -26,7 +26,11 @@
 # define OOOO100_TEST "test_cases/100.txt"
 # define OOO1000_TEST "test_cases/1000.txt"
 # define OO10000_TEST "test_cases/10000.txt"
+# define O100000_TEST "test_cases/100000.txt"
 
+
+# include <time.h>
+# include <sys/times.h>
 # include <unistd.h>
 # include <signal.h>
 # include <sys/stat.h>
