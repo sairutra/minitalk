@@ -261,10 +261,10 @@ void client_server_tests(char** envp)
 	testcase = readfile(OOO1000_TEST);
 	status += client_server_test(++testnum, (char *[]){"client", "", testcase, NULL}, envp);
 	free(testcase);
-	// printf(BMAG "\nstring len: 10000\n" RESET);
-	// testcase = readfile(OO10000_TEST);
-	// status += client_server_test(++testnum, (char *[]){"client", "", testcase, NULL}, envp);
-	// free(testcase);
+	printf(BMAG "\nstring len: 10000\n" RESET);
+	testcase = readfile(OO10000_TEST);
+	status += client_server_test(++testnum, (char *[]){"client", "", testcase, NULL}, envp);
+	free(testcase);
 	printf("\n");
 	if (status != 0)
 		printf("There was something wrong, check %s\n", SERClILOGS);
