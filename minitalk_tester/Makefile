@@ -31,3 +31,5 @@ clean:
 	rm -rf client
 	rm -rf server
 	rm -rf testtemp
+
+re: clean all
