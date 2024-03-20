@@ -14,14 +14,14 @@
 
 void	msg_status_start(pid_t pid, c_msg_t *g_msg)
 {
-	int sleepindex;
+	int si;
 
-	sleepindex = 0;
+	si = 0;
 	while (g_msg->msg_stat != 2)
 	{
 		kill(pid, SIGUSR2);
-		while (g_msg->len_status != 2 && sleepindex < 100000)
-			sleepindex++;
+		while (g_msg->msg_stat != 2 && si++ < 100000)
+			usleep(1);
 	}
 	if (VERBOSE == 1)
 		ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
@@ -29,14 +29,14 @@ void	msg_status_start(pid_t pid, c_msg_t *g_msg)
 
 void	msg_status_end(pid_t pid, int msg_status, c_msg_t *g_msg)
 {
-	int sleepindex;
+	int si;
 
-	sleepindex = 0;
+	si = 0;
 	while (g_msg->msg_stat != 7)
 	{
 		kill(pid, SIGUSR2);
-		while (g_msg->len_status != 2 && sleepindex < 1000000)
-			sleepindex++;
+		while (g_msg->msg_stat != 7 && si++ < 1000000)
+			usleep(1);
 	}
 	if (VERBOSE == 1)
 	{

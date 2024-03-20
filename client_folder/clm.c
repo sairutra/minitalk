@@ -14,33 +14,33 @@
 
 void	len_status_start(pid_t pid, int len_status, c_msg_t *g_msg)
 {
-	int sleepindex;
+	int si;
 
-	sleepindex = 0;
+	si = 0;
 	while (g_msg->len_status != 2)
 	{
 		kill(pid, SIGUSR2);
-		while (g_msg->len_status != 2 && sleepindex < 100000)
-			sleepindex++;
-	}
-	if (VERBOSE == 1)
-	{
-		ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
-		ft_putnbr_fd(len_status, STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		if (VERBOSE == 1)
+		{
+			ft_putstr_fd("send sigusr2 lenstatus: ", STDOUT_FILENO);
+			ft_putnbr_fd(len_status, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
+		while (g_msg->len_status != 2 && si++ < 128000)
+                usleep(1);
 	}
 }
 
 void	len_status_sending(pid_t pid, c_msg_t *g_msg)
 {
-	int sleepindex;
+	int si;
 
-	sleepindex = 0;
+	si = 0;
 	while (g_msg->len_status != 4)
 	{
 		kill(pid, SIGUSR1);
-		while (g_msg->len_status != 2 && sleepindex < 100000)
-			sleepindex++;
+		while (g_msg->len_status != 4 && si++ < 100000)
+			usleep(1);
 	}
 	if (VERBOSE == 1)
 		ft_putstr_fd("send sigusr1 len\n", STDOUT_FILENO);
@@ -48,14 +48,14 @@ void	len_status_sending(pid_t pid, c_msg_t *g_msg)
 
 void	len_status_end(pid_t pid, int len_status, c_msg_t *g_msg)
 {
-	int sleepindex;
+	int si;
 
-	sleepindex = 0;
+	si = 0;
 	while (g_msg->len_status != 6)
 	{
 		kill(pid, SIGUSR2);
-		while (g_msg->len_status != 2 && sleepindex < 100000)
-			sleepindex++;
+		while (g_msg->len_status != 6 && si++ < 100000)
+			usleep(1);
 	}
 	if (VERBOSE == 1)
 	{

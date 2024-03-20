@@ -52,11 +52,8 @@ void	sendbits(unsigned char byte, int pid)
 				sendbits_sigusr2(pid);
 			else
 				sendbits_sigusr1(pid);
-			while (g_msg.msg_stat != 4 && si < 1000000)
-			{
+			while (g_msg.msg_stat != 4 && si++ < 1000000)
 				usleep(1);
-				si++;
-			}
 		}
 		index--;
 	}

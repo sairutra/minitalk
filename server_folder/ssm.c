@@ -18,8 +18,7 @@ void	print_string(struct s_msg_t *msg, pid_t pid)
 
 	kill(pid, SIGUSR2);
 	msg->load[msg->index] = '\0';
-	write(STDOUT_FILENO, msg->load, (msg->length - 1));
-	write(STDOUT_FILENO, "\n", 1);
+	ft_putendl_fd(msg->load, STDOUT_FILENO);
 	temp = msg->load;
 	free(temp);
 	if (VERBOSE == 1)
