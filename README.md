@@ -223,7 +223,7 @@ In the CCM functions are gathered which are relevent for the message itself and 
 
 ### CSM
 
-This module helps with changing the statuses of the c_msg_t struct which is used for communication with the server. Check <a  href="#structures">Usage</a> for more information.
+This module helps with changing the statuses of the t_msg_s struct which is used for communication with the server. Check <a  href="#structures">Usage</a> for more information.
 
 ### SLM
 
@@ -244,9 +244,9 @@ This module check wether the string has finished after the binary of a new chara
 
 # Structures
 
-## c_msg_t
+## t_msg_s
 
-the c_msg_t struct is included to make communication between server and client better. the members of the struct
+the t_msg_s struct is included to make communication between server and client better. the members of the struct
 
 are used to hold information about the server pid, length communication, and message communication. Below a list can be found about the length_status member, used for length communication and the msg_status member, used for message communication.
 
@@ -284,9 +284,9 @@ are used to hold information about the server pid, length communication, and mes
 
 7 = fin (completion of message delivery )
 
-## s_msg_t
+## t_msg_s
 
-the s_msg_t struct is included to make communication between server and client better. the members of the struct
+the t_msg_s struct is included to make communication between server and client better. the members of the struct
 
 are used to hold information about the server pid, length communication, and message communication. Below a list can be found about the length_status member, used for length communication and the msg_status member, used for message communication.
 
