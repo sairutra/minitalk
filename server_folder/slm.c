@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:45:32 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 18:58:57 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:15:01 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	msg_length_init(struct s_msg_t *msg, pid_t pid)
+void	msg_length_init(struct t_msg_s *msg, pid_t pid)
 {
 	msg->length += 1;
 	if (VERBOSE == 1)
@@ -24,7 +24,7 @@ void	msg_length_init(struct s_msg_t *msg, pid_t pid)
 	kill(pid, SIGUSR1);
 }
 
-void	len_status_confirm(struct s_msg_t *msg, pid_t pid)
+void	len_status_confirm(struct t_msg_s *msg, pid_t pid)
 {
 	msg->len_status = 1;
 	msg->length = 0;
@@ -36,7 +36,7 @@ void	len_status_confirm(struct s_msg_t *msg, pid_t pid)
 	kill(pid, SIGUSR2);
 }
 
-void	len_status_completion(struct s_msg_t *msg, pid_t pid)
+void	len_status_completion(struct t_msg_s *msg, pid_t pid)
 {
 	kill(pid, SIGUSR2);
 	msg->len_status = 2;

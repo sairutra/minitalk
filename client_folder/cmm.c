@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:14:20 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 20:20:55 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:22:07 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sendload(char load, pid_t pid)
 	sendbits(load, pid);
 }
 
-void	initialize_client_struct(struct c_msg_t *msg)
+void	initialize_client_struct(struct t_msg_c *msg)
 {
 	if (VERBOSE == 1)
 		ft_putstr_fd("struct members initaliazed to 0\n", STDOUT_FILENO);

@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:42:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:07:09 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:16:34 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	print_string(struct s_msg_t *msg, pid_t pid)
+void	print_string(struct t_msg_s *msg, pid_t pid)
 {
 	char	*temp;
 
@@ -27,7 +27,7 @@ void	print_string(struct s_msg_t *msg, pid_t pid)
 	ft_putstr_fd("Server ready to receive string again\n", STDOUT_FILENO);
 }
 
-void	string_initializer(struct s_msg_t *msg, char *binary, pid_t pid)
+void	string_initializer(struct t_msg_s *msg, char *binary, pid_t pid)
 {
 	binary[8] = '\0';
 	msg->binaryindex = 0;

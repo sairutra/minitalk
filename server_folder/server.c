@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 21:26:49 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:14:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-static struct s_msg_t	g_msg;
+static struct t_msg_s	g_msg;
 
 int	binarytodecimal(char *binary)
 {

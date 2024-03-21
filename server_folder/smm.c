@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:43:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:44:54 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:16:25 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	initialize_server_struct(struct s_msg_t *msg)
+void	initialize_server_struct(struct t_msg_s *msg)
 {
 	if (VERBOSE == 1)
 		ft_putstr_fd("server struct members initaliazed to 0\n", STDOUT_FILENO);
@@ -24,7 +24,7 @@ void	initialize_server_struct(struct s_msg_t *msg)
 	msg->load = NULL;
 }
 
-void	msg_status_confirm(struct s_msg_t *msg, pid_t pid)
+void	msg_status_confirm(struct t_msg_s *msg, pid_t pid)
 {
 	msg->msg_status = 1;
 	if (VERBOSE == 1)
@@ -35,7 +35,7 @@ void	msg_status_confirm(struct s_msg_t *msg, pid_t pid)
 	kill(pid, SIGUSR2);
 }
 
-void	server_sigusr1(struct s_msg_t *msg, char *binary, pid_t pid)
+void	server_sigusr1(struct t_msg_s *msg, char *binary, pid_t pid)
 {
 	binary[msg->binaryindex] = 48;
 	msg->binaryindex++;
@@ -49,7 +49,7 @@ void	server_sigusr1(struct s_msg_t *msg, char *binary, pid_t pid)
 	kill(pid, SIGUSR1);
 }
 
-void	server_sigusr2(struct s_msg_t *msg, char *binary, pid_t pid)
+void	server_sigusr2(struct t_msg_s *msg, char *binary, pid_t pid)
 {
 	binary[msg->binaryindex] = 49;
 	msg->binaryindex++;

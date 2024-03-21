@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:10:49 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:05:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:21:50 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	msg_status_start(pid_t pid, c_msg_t *g_msg)
+void	msg_status_start(pid_t pid, t_msg_c *g_msg)
 {
 	int	si;
 
@@ -27,7 +27,7 @@ void	msg_status_start(pid_t pid, c_msg_t *g_msg)
 		ft_putstr_fd("send sigusr2 msg status 1\n", STDOUT_FILENO);
 }
 
-void	msg_status_end(pid_t pid, int msg_status, c_msg_t *g_msg)
+void	msg_status_end(pid_t pid, int msg_status, t_msg_c *g_msg)
 {
 	int	si;
 

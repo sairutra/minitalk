@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:04:47 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:23:38 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-static struct c_msg_t	g_msg;
+static struct t_msg_c	g_msg;
 
 void	sendlength(const char *str, int pid)
 {

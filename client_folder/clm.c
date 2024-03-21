@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:18:55 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:05:25 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:22:20 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minitalk.h"
 
-void	len_status_start(pid_t pid, int len_status, c_msg_t *g_msg)
+void	len_status_start(pid_t pid, int len_status, t_msg_c *g_msg)
 {
 	int	si;
 
@@ -31,7 +31,7 @@ void	len_status_start(pid_t pid, int len_status, c_msg_t *g_msg)
 	}
 }
 
-void	len_status_sending(pid_t pid, c_msg_t *g_msg)
+void	len_status_sending(pid_t pid, t_msg_c *g_msg)
 {
 	int	si;
 
@@ -46,7 +46,7 @@ void	len_status_sending(pid_t pid, c_msg_t *g_msg)
 		ft_putstr_fd("send sigusr1 len\n", STDOUT_FILENO);
 }
 
-void	len_status_end(pid_t pid, int len_status, c_msg_t *g_msg)
+void	len_status_end(pid_t pid, int len_status, t_msg_c *g_msg)
 {
 	int	si;
 
