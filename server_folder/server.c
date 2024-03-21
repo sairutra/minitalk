@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:14:49 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 16:30:01 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,18 @@ void	handle_sigusr(int sig, siginfo_t *info, void *ucontext)
 int	main(void)
 {
 	struct sigaction	sa;
+	int					ret;
 
+	ret = 0;
 	initialize_server_struct(&g_msg);
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_sigaction = handle_sigusr;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, 0);
-	sigaction(SIGUSR2, &sa, 0);
+	ret += sigaction(SIGUSR1, &sa, 0);
+	ret += sigaction(SIGUSR2, &sa, 0);
+	if(ret)
+		exit(EXIT_FAILURE);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putstr_fd("\n", 1);
 	while (1)
