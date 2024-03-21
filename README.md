@@ -85,7 +85,6 @@
 <li><a  href="#usage">Usage</a></li>
 <li><a  href="#architecture">Architecture</a></li>
 <li><a  href="#structures">Structures</a></li>
-<li><a  href="#configuration">Configuration</a></li>
 <li><a  href="#debugging">debugging</a></li>
 <li><a  href="#roadmap">Roadmap</a></li>
 <li><a  href="#license">License</a></li>
@@ -307,21 +306,6 @@ are used to hold information about the server pid, length communication, and mes
 2 = completion (server received end message and send completion message to client)
 
 <p  align="right">(<a  href="#readme-top">back to top</a>)</p>
-
-
-# Configuration
-
-In the Makefile certain paramaters are given to how large certain time intervals are between signals that are send. These include:
-
-**Client**
-- LEN_INTERVAL (Interval of microseconds before next length signal is send)
-- BIT_INTERVAL (Interval of microseconds before next bit signal is send for message communication)
-- MSG_INTERVAL (Interval of microseconds before next signal is send for message completion confirmation)
-
-**Server**
-- SRV_INTERVAL (Interval of microseconds to send signals back to client)
-
-The variables in the Makefile which are prefixed with "MS_" can be changed according to preference. Be aware that the shorter the interval the higher chance is that signals will be missed.
 
 
 # Debugging

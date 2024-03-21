@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 14:10:29 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:27:13 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:49:17 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,6 @@
 
 # ifndef VERBOSE
 #  define VERBOSE 0
-# endif
-
-# ifndef LEN_INTERVAL
-#  define LEN_INTERVAL 500000
-# endif
-
-# ifndef BIT_INTERVAL
-#  define BIT_INTERVAL 10000
-# endif
-
-# ifndef MSG_INTERVAL
-#  define MSG_INTERVAL 50000
-# endif
-
-# ifndef SRV_INTERVAL
-#  define SRV_INTERVAL 500
 # endif
 
 typedef struct t_msg_c
