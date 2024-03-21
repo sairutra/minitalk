@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 16:30:01 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 18:39:48 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(void)
 	sigemptyset(&sa.sa_mask);
 	ret += sigaction(SIGUSR1, &sa, 0);
 	ret += sigaction(SIGUSR2, &sa, 0);
-	if(ret)
+	if (ret)
 		exit(EXIT_FAILURE);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putstr_fd("\n", 1);

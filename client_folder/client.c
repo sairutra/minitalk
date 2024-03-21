@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 16:29:19 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 18:39:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	sendmessage(char *load, int pid)
 int	main(int argc, char **argv)
 {
 	struct sigaction	sa;
-	int 				ret;
+	int					ret;
 
 	ret = 0;
 	initialize_client_struct(&g_msg);
@@ -112,7 +112,7 @@ int	main(int argc, char **argv)
 	sigemptyset(&sa.sa_mask);
 	ret += sigaction(SIGUSR1, &sa, 0);
 	ret += sigaction(SIGUSR2, &sa, 0);
-	if(ret)
+	if (ret)
 		exit(EXIT_FAILURE);
 	ft_printf("%d\n", getpid());
 	g_msg.pid = ft_atoi(argv[1]);
