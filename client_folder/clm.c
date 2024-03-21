@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:18:55 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 20:41:04 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:05:25 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	len_status_start(pid_t pid, int len_status, c_msg_t *g_msg)
 {
-	int si;
+	int	si;
 
 	si = 0;
 	while (g_msg->len_status != 2)
@@ -27,13 +27,13 @@ void	len_status_start(pid_t pid, int len_status, c_msg_t *g_msg)
 			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		while (g_msg->len_status != 2 && si++ < 128000)
-                usleep(1);
+			usleep(1);
 	}
 }
 
 void	len_status_sending(pid_t pid, c_msg_t *g_msg)
 {
-	int si;
+	int	si;
 
 	si = 0;
 	while (g_msg->len_status != 4)
@@ -48,7 +48,7 @@ void	len_status_sending(pid_t pid, c_msg_t *g_msg)
 
 void	len_status_end(pid_t pid, int len_status, c_msg_t *g_msg)
 {
-	int si;
+	int	si;
 
 	si = 0;
 	while (g_msg->len_status != 6)

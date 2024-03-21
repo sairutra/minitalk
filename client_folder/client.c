@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:35:13 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 21:38:08 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:04:47 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	sendmessage(char *load, int pid)
 	msg_status_start(pid, &g_msg);
 	while (load[index] != '\0')
 		sendload(load[index++], pid);
-	if(g_msg.msg_stat == 5)
+	if (g_msg.msg_stat == 5)
 		initialize_client_struct(&g_msg);
 	ft_putstr_fd("Server ready for another message\n", STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
