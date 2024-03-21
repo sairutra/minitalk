@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:42:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/19 21:37:28 by spenning      ########   odam.nl         */
+/*   Updated: 2024/03/21 14:07:09 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	string_initializer(struct s_msg_t *msg, char *binary, pid_t pid)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 	msg->index += 1;
-	if(msg->index == (msg->length - 1))
+	if (msg->index == (msg->length - 1))
 		print_string(msg, pid);
 }
