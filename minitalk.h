@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minitalk.h                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 14:10:29 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:49:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/06/19 21:01:28 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <signal.h>
 # include <sys/types.h>
-# include "./libft/libft.h"
+# include "./libft/inc/libft.h"
 
 # ifndef VERBOSE
 #  define VERBOSE 0

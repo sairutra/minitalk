@@ -22,7 +22,7 @@ SSM = server_folder/ssm.c
 
 LIBFT = ./libft
 
-LIBFT.A = ./libft/libft.a
+LIBFT.A = ./libft/lib/libft.a
 
 all: $(LIBFT.A)
 	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A) -o server
