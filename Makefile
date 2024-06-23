@@ -1,36 +1,37 @@
 CC = cc
 
-FLAGS = -Wall -Werror -Wextra -O3
+FLAGS = -Iinc -Ilib/libft/inc -Wall -Werror -Wextra -O3
 
-SERVER = server_folder/server.c
+SERVER = src/srv/server.c
 
-ClIENT = client_folder/client.c
+ClIENT = src/clt/client.c
 
-CLM = client_folder/clm.c
+CLM = src/clt/clm.c
 
-CLM_EXT = client_folder/clm_ext.c
+CLM_EXT = src/clt/clm_ext.c
 
-CMM = client_folder/cmm.c
+CMM = src/clt/cmm.c
 
-CSM = client_folder/csm.c
+CSM = src/clt/csm.c
 
-SMM = server_folder/smm.c
+SMM = src/srv/smm.c
 
-SLM = server_folder/slm.c
+SLM = src/srv/slm.c
 
-SSM = server_folder/ssm.c
+SSM = src/srv/ssm.c
 
-LIBFT = ./libft
+LIBFT = ./lib/libft
 
-LIBFT.A = ./libft/lib/libft.a
+LIBFT.A = ./lib/libft/lib/libft.a
 
 all: $(LIBFT.A)
-	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A) -o server
-	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(CLM_EXT) $(LIBFT.A) -o client
+	mkdir -p build/bin
+	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A) -o build/bin/server
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(CLM_EXT) $(LIBFT.A) -o build/bin/client
 
 verbose: $(LIBFT.A)
-	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A)  -D VERBOSE=1 -o server
-	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(CLM_EXT) $(LIBFT.A)  -D VERBOSE=1 -o client
+	$(CC) $(FLAGS) $(SERVER) $(SLM) $(SMM) $(SSM) $(LIBFT.A)  -D VERBOSE=1 -o build/bin/server
+	$(CC) $(FLAGS) $(ClIENT) $(CLM) $(CMM) $(CSM) $(CLM_EXT) $(LIBFT.A)  -D VERBOSE=1 -o build/bin/client
 
 $(LIBFT.A):
 	@$(MAKE) -C $(LIBFT) all

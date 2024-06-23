@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   clm.c                                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:18:55 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:22:20 by spenning      ########   odam.nl         */
+/*   Updated: 2024/06/23 20:59:59 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include <minitalk.h>
 
 void	len_status_start(pid_t pid, int len_status, t_msg_c *g_msg)
 {

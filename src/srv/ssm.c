@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   ssm.c                                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:42:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:16:34 by spenning      ########   odam.nl         */
+/*   Updated: 2024/06/23 21:00:14 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include <minitalk.h>
 
 void	print_string(struct t_msg_s *msg, pid_t pid)
 {

@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   csm.c                                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 15:10:49 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 14:21:50 by spenning      ########   odam.nl         */
+/*   Updated: 2024/06/23 21:00:44 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include <minitalk.h>
 
 void	msg_status_start(pid_t pid, t_msg_c *g_msg)
 {

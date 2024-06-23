@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   server.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/01 12:55:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/03/21 18:39:48 by spenning      ########   odam.nl         */
+/*   Updated: 2024/06/23 21:00:33 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include <minitalk.h>
 
 static struct t_msg_s	g_msg;
 

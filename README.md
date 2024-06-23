@@ -44,7 +44,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/sebastianpenning/minitalk">
-    <img src="images/logo.png" alt="Logo" width="150" height="150">
+    <img src="resources/images/logo.png" alt="Logo" width="150" height="150">
   </a>
 
   <h3 align="center">minitalk</h3>
@@ -171,7 +171,7 @@ Make
 After the server has started you should see a pid id of the server showing up on the terminal such as below.
 
 <a href="https://github.com/sebastianpenning/minitalk">
-    <img src="images/server_start_example.png" alt="server_start" width="1100" height="200">
+    <img src="resources/images/server_start_example.png" alt="server_start" width="1100" height="200">
 </a>
 
 Start a second terminal in order to send a message to the server, with the following paramaters
@@ -185,7 +185,7 @@ Start a second terminal in order to send a message to the server, with the follo
 As can be seen here below.
 
 <a href="https://github.com/sebastianpenning/minitalk">
-    <img src="images/client_msg_example.png" alt="client_msg" width="1100" height="200">
+    <img src="resources/images/client_msg_example.png" alt="client_msg" width="1100" height="200">
 </a>
 
 As can be seen by the messages in the terminal, the server can receive another message after the previous message has finished printing. The client process finishes after sending the string. Therefore it needs to be executed again with the paramaters explained above. 
